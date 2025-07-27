@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ subject }} Test</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>{{ subject }} - MCQ Test</h1>
+    <form action="/submit/{{ subject }}?user={{ user }}" method="post">
+      {% for q in questions %}
+      <div class="question-block">
+        <p><strong>Q{{ loop.index }}:</strong> {{ q.question_text }}</p>
+        <label><input type="radio" name="{{ q.id }}" value="A" required> {{ q.option_a }}</label><br>
+        <label><input type="radio" name="{{ q.id }}" value="B"> {{ q.option_b }}</label><br>
+        <label><input type="radio" name="{{ q.id }}" value="C"> {{ q.option_c }}</label><br>
+        <label><input type="radio" name="{{ q.id }}" value="D"> {{ q.option_d }}</label>
+      </div>
+      {% endfor %}
+      <input type="submit" value="Submit Answers">
+    </form>
+  </div>
+</body>
+</html>

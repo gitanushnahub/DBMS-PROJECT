@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Student Registration</h1>
+    <form action="/signup" method="post">
+      <input type="text" name="name" placeholder="Full Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <input type="text" name="phone_number" placeholder="Phone Number" required>
+      <input type="date" name="dob" placeholder="Date of Birth" required>
+      <input type="text" name="blood_group" placeholder="Blood Group" required>
+      
+      <h3>Address Details:</h3>
+      <input type="text" name="city" placeholder="City" required>
+      <input type="text" name="street_name" placeholder="Street Name" required>
+      <input type="text" name="door_number" placeholder="Door Number" required>
+      
+      <input type="text" name="department" placeholder="Department" required>
+      <input type="text" name="username" placeholder="Username" required>
+
+      <input type="submit" value="Sign Up">
+    </form>
+    <p style="text-align:center;">Already have an account? <a href="/login">Login here</a></p>
+  </div>
+</body>
+</html>

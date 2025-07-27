@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+        }
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: white;
+            padding-top: 20px;
+        }
+        .sidebar-header {
+            padding: 10px 20px;
+            font-size: 24px;
+            font-weight: bold;
+            border-bottom: 1px solid #4b545c;
+            margin-bottom: 20px;
+        }
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar-menu li {
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .sidebar-menu li:hover, .sidebar-menu li.active {
+            background-color: #2c3136;
+        }
+        .sidebar-menu li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+        .welcome-panel, .subjects-panel, .grades-panel {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .panel-header {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #3c4b64;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .student-info {
+            margin-bottom: 15px;
+        }
+        .student-info label {
+            font-weight: bold;
+            display: inline-block;
+            width: 100px;
+        }
+        .subject-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .subject-card {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .subject-card a {
+            color: #3c4b64;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="sidebar-header">Dashboard</div>
+            <ul class="sidebar-menu">
+                <li class="active" data-panel="welcome"><a href="#">Welcome</a></li>
+                <li data-panel="subjects"><a href="#">Subjects</a></li>
+                <li data-panel="grades"><a href="#">Grades</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="welcome-panel" id="welcome-panel">
+                <h2 class="panel-header">Welcome, {{ student.name }}</h2>
+                <div class="student-info">
+                    <label>Email:</label> {{ student.email }}
+                </div>
+                <div class="student-info">
+                    <label>Department:</label> {{ student.department }}
+                </div>
+                <div class="student-info">
+                    <label>Marks:</label> {{ student.marks }}
+                </div>
+                <div class="student-info">
+                    <label>Grade:</label> {{ student.grade if student.grade else "N/A" }}
+                </div>
+            </div>
+            
+            <div class="subjects-panel hidden" id="subjects-panel">
+                <h2 class="panel-header">Available Subjects</h2>
+                <div class="subject-list">
+                    {% for subject in subjects %}
+                    <div class="subject-card">
+                        <a href="/test/{{ subject }}?user={{ student.email }}">{{ subject }}</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="grades-panel hidden" id="grades-panel">
+                <h2 class="panel-header">Your Grades</h2>
+                <div class="student-info">
+                    <label>Latest Marks:</label> {{ student.marks }}
+                </div>
+                <div class="student-info">
+                    <label>Grade:</label> {{ student.grade if student.grade else "N/A" }}
+                </div>
+                <div class="student-info">
+                    <label>Department:</label> {{ student.department }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuItems = document.querySelectorAll('.sidebar-menu li');
+            const panels = document.querySelectorAll('.content > div');
+            
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all menu items
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    // Add active class to clicked menu item
+                    this.classList.add('active');
+                    
+                    // Hide all panels
+                    panels.forEach(panel => panel.classList.add('hidden'));
+                    
+                    // Show the corresponding panel
+                    const panelId = this.getAttribute('data-panel') + '-panel';
+                    document.getElementById(panelId).classList.remove('hidden');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

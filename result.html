@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Result</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Your Results</h1>
+    <p><strong>Total Marks:</strong> {{ marks }} / 10</p>
+    <p><strong>Grade:</strong> {{ grade }}</p>
+    <p style="text-align:center;"><a href="/dashboard?user={{ request.query_params.get('user') }}">Back to Dashboard</a></p>
+  </div>
+</body>
+</html>
